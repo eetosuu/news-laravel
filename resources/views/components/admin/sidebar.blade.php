@@ -9,7 +9,7 @@
         <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href=" {{ route('admin.index') }}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs('admin.index')) text-primary active @else text-black @endif" aria-current="page" href=" {{ route('admin.index') }}">
                         <svg class="bi">
                             <use xlink:href="#house-fill"/>
                         </svg>
@@ -17,7 +17,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('admin.categories.index') }}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs('admin.categories.*')) text-primary active @else text-black @endif" href="{{ route('admin.categories.index') }}">
                         <svg class="bi">
                             <use xlink:href="#file-earmark"/>
                         </svg>
@@ -25,7 +25,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('admin.news.index') }}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs('admin.news.*')) text-primary active @else text-black @endif" href="{{ route('admin.news.index') }}">
                         <svg class="bi">
                             <use xlink:href="#people"/>
                         </svg>
@@ -33,7 +33,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                    <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs('admin.users.*')) text-primary active @else text-black @endif" href="#">
                         <svg class="bi">
                             <use xlink:href="#graph-up"/>
                         </svg>

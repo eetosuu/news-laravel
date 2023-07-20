@@ -1,6 +1,6 @@
-@extends('layouts.main');
+@extends('layouts.main')
 @section('title') Cписок новостей - @parent @stop
-@section('content');
+@section('content')
     <h2>News list</h2>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         @forelse($newsList as $news)

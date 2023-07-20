@@ -1,5 +1,5 @@
-@extends('layouts.main');
-@section('title') {{ $news['title'] }} - @parent @stop
+@extends('layouts.main')
+@section('title') {{ $news['title'] }} @parent @stop
 @section('content')
 <h2>{{ $news['title'] }}</h2>
 <div>

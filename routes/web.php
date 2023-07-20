@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,3 +42,7 @@ Route::get('/main', [MainController::class, 'index'])->name('main.index');
 //category
 Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
 Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('category.show');
+
+//order
+Route::get('/order', [OrderController::class, 'create'])->name('order.create');
+Route::resource('/order', OrderController::class);

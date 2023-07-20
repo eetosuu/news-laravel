@@ -4,7 +4,7 @@
         <h1 class="h2">Панель управления</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
-                <button type="button" class="btn btn-sm btn-outline-secondary">Добавить новость</button>
+                <a type="button"  href="{{ route('admin.news.create') }}" class="btn btn-sm btn-outline-secondary">Добавить новость</a>
             </div>
         </div>
     </div>
