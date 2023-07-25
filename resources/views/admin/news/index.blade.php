@@ -24,19 +24,19 @@
             @forelse($newsList as $news)
                 <tr>
                     <td>
-                        {{$news['id']}}
+                        {{$news->id}}
                     </td>
                     <td>
-                        {{$news['title']}}
+                        {{$news->title}}
                     </td>
                     <td>
-                        {{$news['author']}}
+                        {{$news->author}}
                     </td>
                     <td>
-                        {{$news['status']}}
+                        {{$news->status}}
                     </td>
                     <td>
-                        {{$news['created_at']}}
+                        {{$news->created_at}}
                     </td>
                     <td>
                         <a href="">Edit</a> &nbsp; <a href="">Delete</a>
