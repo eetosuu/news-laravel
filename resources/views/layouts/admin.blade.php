@@ -222,5 +222,6 @@
     </div>
 </div>
 <script src="{{ asset('assets/bootstrap.bundle.min.js') }}"></script>
+@stack('js')
 </body>
 </html>

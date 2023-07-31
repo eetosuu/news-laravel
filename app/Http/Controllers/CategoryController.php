@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Category;
 use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
     public  function index(): View
     {
-        return view('category.index', [
-            'categoriesList' => $this->getCategories()
+        return view('admin.categories.index', [
+            'categoriesList' => Category::all(),
         ]);
     }
 

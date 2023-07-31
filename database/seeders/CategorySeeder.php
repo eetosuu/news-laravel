@@ -23,7 +23,6 @@ class CategorySeeder extends Seeder
         for ($i = 0; $i < $quantityCategories; $i++) {
             $categories[] = [
                 'title' => fake()->jobTitle(),
-                'description' => fake()->text(100),
                 'created_at' => now(),
             ];
         }
