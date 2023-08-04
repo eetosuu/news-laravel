@@ -55,7 +55,7 @@
                         {{$news->created_at}}
                     </td>
                     <td>
-                        <a href="{{ route('admin.news.edit', ['news' => $news]) }}">Edit</a> &nbsp; <a href="">Delete</a>
+                        <a href="{{ route('admin.news.edit', ['news' => $news]) }}">Edit</a> &nbsp; <a class="delete" href="javascript:;" rel="{{ $news->id }}">Delete</a>
                     </td>
                 </tr>
             @empty
@@ -76,7 +76,33 @@
             let filter = document.getElementById("filter");
             filter.addEventListener("change", function () {
                 location.href = "?f=" + this.value;
-            })
-        })
+            });
+
+            let elements = document.querySelectorAll('.delete');
+            elements.forEach(function (el, key) {
+                el.addEventListener("click", function () {
+                    const id = el.getAttribute('rel');
+                    if(confirm(`Удалить запись с ID ${id}?`)) {
+                        send(`/admin/news/${id}`).then( () => {
+                            location.reload();
+                        })
+                    } else {
+                        alert('Удаление отменено');
+                    }
+                });
+            });
+        });
+
+        async function send(url) {
+            let responce = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+            });
+
+            let result = await responce.json();
+            return result.ok;
+        }
     </script>
 @endpush

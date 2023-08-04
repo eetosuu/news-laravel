@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\News\Status;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\News\Edit;
 use App\Models\Category;
 use App\Models\News;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\View\View;
 
 class NewsController extends Controller
@@ -42,15 +47,14 @@ class NewsController extends Controller
             'title' => 'required'
         ]);
 
-        $data = $request->only(['title', 'author', 'status', 'description', 'category_id']);
-        $news = new News($data);
+        $news = new News($request->validated());
 
         if ($news->save())
         {
-          return redirect()->route('admin.news.index')->with('success', 'Запись успешно сохранена');
+          return redirect()->route('admin.news.index')->with('success', __("The news was saved successfully"));
         }
 
-        return back()->with('error', 'Запись не создана');
+        return back()->with('error', __("Couldn't save the news, try again"));
     }
 
     /**
@@ -76,25 +80,32 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, News $news)
+    public function update(Edit $request, News $news)
     {
-        $data = $request->only(['title', 'author', 'status', 'description', 'category_id']);
 
-        $news = $news->fill($data);
+        $news = $news->fill($request->validated());
 
         if ($news->save())
         {
-            return redirect()->route('admin.news.index')->with('success', 'Запись успешно сохранена');
+            return redirect()->route('admin.news.index')->with('success', __("The news was saved successfully"));
         }
 
-        return back()->with('error', 'Запись не изменена');
+        return back()->with('error', __("The news has not been updated"));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(News $news): JsonResponse
     {
-        //
+        try {
+            $news->delete();
+
+            return response()->json('ok');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage(), $e->getTrace());
+
+            return response()->json('error', 400);
+        }
     }
 }

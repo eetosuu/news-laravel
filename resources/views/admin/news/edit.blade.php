@@ -19,6 +19,7 @@
                 <div class="mb-3">
                     <label for="author" class="form-label">Автор</label>
                     <input type="text" class="form-control" id="author" name="author" aria-describedby="author" value="{{ $news->author }}">
+                @error('author') {{ $message }} @enderror
                 </div>
                 <div class="mb-3">
                     <label for="category" class="form-label">Категория</label>
@@ -31,11 +32,11 @@
                 <div class="mb-3">
                     <label for="status" class="form-label">Статус</label>
                     <select class="form-select form-control" aria-label="Select status" name="status">
-                        <option value="1" @if($news->status === \App\Enums\News\Status::DRAFT->value) selected @endif>
+                        <option @if($news->status === \App\Enums\News\Status::DRAFT->value) selected @endif>
                             {{\App\Enums\News\Status::DRAFT->value}}</option>
-                        <option value="2" @if($news->status === \App\Enums\News\Status::ACTIVE->value) selected @endif>
+                        <option @if($news->status === \App\Enums\News\Status::ACTIVE->value) selected @endif>
                             {{\App\Enums\News\Status::ACTIVE->value}}</option>
-                        <option value="3" @if($news->status === \App\Enums\News\Status::BLOCKED->value) selected @endif>{{\App\Enums\News\Status::BLOCKED->value}}</option>
+                        <option @if($news->status === \App\Enums\News\Status::BLOCKED->value) selected @endif>{{\App\Enums\News\Status::BLOCKED->value}}</option>
                     </select>
                 </div>
                 <div class="mb-3">
