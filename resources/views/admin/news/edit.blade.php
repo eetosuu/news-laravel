@@ -8,7 +8,7 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Редактировать новость</h1>
     </div>
-        <form method="post" action="{{route('admin.news.update', ['news' => $news])}}">
+        <form method="post" action="{{route('admin.news.update', ['news' => $news])}}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group">
@@ -45,11 +45,19 @@
                 </div>
                 <div class="mb-3">
                     <label for="image" class="form-label">Default file input example</label>
-                    <input class="form-control" type="file" id="image">
+                    <img src="{{ Storage::disk('public')->url($news->image) }}" style="width: 200px; height: 200px" alt="">
+                    <input class="form-control" type="file" name="image" id="image">
                 </div>
                 <button type="submit" class="btn btn-success">Сохранить</button>
             </div>
         </form>
-    </div>
 @endsection
-
+@push('js')
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#description' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+@endpush

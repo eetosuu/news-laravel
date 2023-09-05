@@ -9,7 +9,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\News\Edit;
 use App\Models\Category;
 use App\Models\News;
+use App\Services\Contracts\Upload;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules\Enum;
@@ -41,7 +45,7 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'title' => 'required'
@@ -49,9 +53,8 @@ class NewsController extends Controller
 
         $news = new News($request->validated());
 
-        if ($news->save())
-        {
-          return redirect()->route('admin.news.index')->with('success', __("The news was saved successfully"));
+        if ($news->save()) {
+            return redirect()->route('admin.news.index')->with('success', __("The news was saved successfully"));
         }
 
         return back()->with('error', __("Couldn't save the news, try again"));
@@ -68,7 +71,7 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(News $news)
+    public function edit(News $news): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $categories = Category::all();
         return view('admin.news.edit', [
@@ -80,17 +83,20 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Edit $request, News $news)
+    public function update(Edit $request, News $news, Upload $upload): RedirectResponse
     {
-
-        $news = $news->fill($request->validated());
-
-        if ($news->save())
-        {
-            return redirect()->route('admin.news.index')->with('success', __("The news was saved successfully"));
+        $validated = $request->validated();
+        if ($request->hasFile('image')) {
+            $validated['image'] = $upload->create($request->file('image'));
         }
 
-        return back()->with('error', __("The news has not been updated"));
+        $news = $news->fill($validated);
+
+        if ($news->save()) {
+            return redirect()->route('admin.news.index')->with('success', __('News was saved successfully'));
+        }
+
+        return back()->with('error', __('We can not save item, pleas try again'));
     }
 
     /**

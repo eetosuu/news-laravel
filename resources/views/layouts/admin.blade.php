@@ -223,6 +223,7 @@
     </div>
 </div>
 <script src="{{ asset('assets/bootstrap.bundle.min.js') }}"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 @stack('js')
 </body>
 </html>

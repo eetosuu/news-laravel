@@ -3,12 +3,14 @@
 namespace App\Services;
 
 use App\Services\Contracts\Parser;
+use Illuminate\Support\Facades\Storage;
 use Orchestra\Parser\Xml\Facade as XmlParserData;
 
 class ParserService implements Parser
 {
 
     private string $link;
+
     public function setLink(string $link): Parser
     {
         $this->link = $link;
@@ -38,5 +40,9 @@ class ParserService implements Parser
             ],
         ],
         );
+        $explode = explode('/', $this->link);
+        $fileName = end($explode);
+
+        Storage::append('public/parse' . $fileName . '.' . 'json', json_encode($data));
     }
 }
